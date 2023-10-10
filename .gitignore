@@ -1,0 +1,58 @@
+# Node.js
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# Compiled output
+dist/
+*.js
+*.js.map
+
+# Dependency directories
+/.pnp
+.pnp.js
+
+# TypeScript
+*.tsbuildinfo
+
+# Editor and IDE files
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Test output
+/coverage/
+/.nyc_output/
+
+# Lock files
+yarn.lock
+package-lock.json
+
+# macOS
+.DS_Store
+
+# Windows
+Thumbs.db
+
+# Env files
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Yarn v2
+.yarn/*
+!.yarn/cache
+!.yarn/patches
+!.yarn/releases
+!.yarn/plugins
+!.yarn/sdks
+
+# Debugging
+*.log
+*.log.*
+
+# Compiled JavaScript from TypeScript
+build/

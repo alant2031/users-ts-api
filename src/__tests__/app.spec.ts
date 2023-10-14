@@ -49,6 +49,7 @@ describe('Test /users POST METHOD', () => {
 
 		const resp = await request(app).post('/users').send({});
 		assert.equal(resp.status, 400);
+		assert.equal(resp.body, 'Some required fields are missing');
 	});
 	it('Test Invalid Email', async () => {
 		const app = await server();
@@ -60,6 +61,7 @@ describe('Test /users POST METHOD', () => {
 		};
 		const resp = await request(app).post('/users').send(bodyReq);
 		assert.equal(resp.status, 400);
+		assert.equal(resp.body, 'Email is invalid');
 	});
 	it('Test Email is Unique', async () => {
 		const app = await server();
@@ -73,6 +75,7 @@ describe('Test /users POST METHOD', () => {
 			} as MongoUser);
 
 		assert.equal(resp.status, 409);
+		assert.equal(resp.body, 'Email already exists');
 	});
 });
 
@@ -120,10 +123,7 @@ describe('Test /users/id PATCH METHOD', () => {
 		const respCreated = await request(app).post('/users').send(reqBody);
 		const respUpdated = await request(app)
 			.patch('/users/' + respCreated.body.id)
-			.send({ lastName: newLastName } as Omit<
-				MongoUser,
-				'email' | 'password'
-			>);
+			.send({ lastName: newLastName } as Omit<MongoUser, 'email' | 'password'>);
 		assert.equal(respUpdated.status, 200);
 		assert.equal(respUpdated.body.email, reqBody.email);
 		assert.equal(respUpdated.body.lastName, newLastName);
@@ -131,9 +131,12 @@ describe('Test /users/id PATCH METHOD', () => {
 
 	it('Test Empty Request', async () => {
 		const app = await server();
-
-		const resp = await request(app).post('/users').send({});
+		const respCreated = await request(app).post('/users').send(reqBody);
+		const resp = await request(app)
+			.patch('/users/' + respCreated.body.id)
+			.send({});
 		assert.equal(resp.status, 400);
+		assert.equal(resp.body, 'Some required fields are missing');
 	});
 
 	it('Test Invalid Params', async () => {
@@ -144,6 +147,7 @@ describe('Test /users/id PATCH METHOD', () => {
 			.send({ email: 'josh@mail.com' } as MongoUser);
 
 		assert.equal(resp.status, 400);
+		assert.equal(resp.body, 'Field not allowed');
 	});
 	it('Test Invalid ID', async () => {
 		const app = await server();

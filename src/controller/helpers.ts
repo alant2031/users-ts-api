@@ -28,10 +28,10 @@ export const conflict = (message: string): HttpResponse<string> => {
 		body: message,
 	};
 };
-export const noContent = (message: string): HttpResponse<string> => {
+export const noContent = (): HttpResponse<string> => {
 	return {
 		statusCode: HttpStatusCode.NO_CONTENT,
-		body: message,
+		body: '',
 	};
 };
 

@@ -13,8 +13,8 @@ export class DeleteUserController implements IController {
 			if (!id) {
 				return badRequest('Missing user id');
 			}
-			const user = await this.deleteUserRepository.deleteUser(id);
-			return noContent('User ' + user.firstName + 'succesfully deleted');
+			await this.deleteUserRepository.deleteUser(id);
+			return noContent();
 			// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		} catch (err: any) {
 			console.log('Error: ' + err?.message);

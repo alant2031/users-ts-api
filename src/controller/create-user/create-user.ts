@@ -10,28 +10,20 @@ export class CreateUserController implements IController {
 		httpRequest: HttpRequest<ICreateUserParams>,
 	): Promise<HttpResponse<User | string>> {
 		try {
-			const requiredFields = [
-				'firstName',
-				'lastName',
-				'email',
-				'password',
-			];
+			const requiredFields = ['firstName', 'lastName', 'email', 'password'];
 
 			for (const field of requiredFields) {
-				if (
-					!httpRequest?.body?.[field as keyof ICreateUserParams]
-						?.length
-				) {
-					return badRequest(`Field ${field} is required.`);
+				if (!httpRequest?.body?.[field as keyof ICreateUserParams]?.length) {
+					return badRequest('Some required fields are missing');
 				}
 			}
 			const emailValid = validator.isEmail(httpRequest.body!.email);
 			if (!emailValid) {
-				return badRequest('Email is invalid.');
+				return badRequest('Email is invalid');
 			}
 			const { body } = httpRequest;
 			if (!body) {
-				return badRequest('Please specify a body.');
+				return badRequest('Missing body');
 			}
 			const emailExists = await this.createUserRepository.emailExists(
 				body.email,

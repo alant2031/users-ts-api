@@ -51,12 +51,6 @@ Utilize a rota /users
 4. **DELETE /users/id** Response Body:</br>
 
 ```
-{
-  "id": "64fcd43c9ac0ef7759405e1c",
-  "firstName": "John",
-  "lastName": "Doe",
-  "email": "test@gm.com",
-  "password": "abc123",
-}
+{}
 
 ```

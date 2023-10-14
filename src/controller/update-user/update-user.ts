@@ -10,20 +10,19 @@ export class UpdateUserController implements IController {
 	): Promise<HttpResponse<User | string>> {
 		try {
 			const id = httpRequest?.params?.id;
-			const body = httpRequest?.body;
+			const body = httpRequest?.body as IUpdateUserParams;
 			if (!id) {
 				return badRequest('Missing user id');
 			}
-			if (!body) {
-				return badRequest('Missing body');
+			if (!Object.keys(body).length) {
+				return badRequest('Some required fields are missing');
 			}
 			const allowedFields: (keyof IUpdateUserParams)[] = [
 				'firstName',
 				'lastName',
 			];
 			const fieldNotAllowedToUpdate = Object.keys(body).some(
-				(key) =>
-					!allowedFields.includes(key as keyof IUpdateUserParams),
+				(key) => !allowedFields.includes(key as keyof IUpdateUserParams),
 			);
 			if (fieldNotAllowedToUpdate) {
 				return badRequest('Field not allowed');
